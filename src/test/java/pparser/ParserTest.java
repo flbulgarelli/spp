@@ -23,7 +23,7 @@ public class ParserTest {
 
   @Test
   public void canParseConjunctionExpressions() throws Exception {
-    PredicateParser.parse("f(x), g(y)", new DummyEventHandler());
+    PredicateParser.parse("f(x) , g(y)", new DummyEventHandler());
   }
 
   @Test
@@ -33,13 +33,17 @@ public class ParserTest {
 
   @Test
   public void canParseExpressionsWithStringLiterals() throws Exception {
-    PredicateParser.parse("f(x, 'y')", new DummyEventHandler());
+    PredicateParser.parse("f(x, \"y\")", new DummyEventHandler());
   }
-  
+
   @Test
   public void canParseExpressionsWithNumberLiterals() throws Exception {
     PredicateParser.parse("f(x, 1)", new DummyEventHandler());
   }
   
-  
+  @Test
+  public void canParseExpressionsWithParenthesis() throws Exception {
+    PredicateParser.parse("( f(x) , h(x) )", new DummyEventHandler());
+  }
+
 }

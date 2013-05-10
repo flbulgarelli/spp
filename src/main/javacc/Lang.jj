@@ -57,22 +57,28 @@ void doParse() :
 }
 
 void expression() :
+{}
 { 
- Token operation; 
- Object arg0 = null, arg1 = null;
- Path target = null; 
+  simpleExpression() | < OPEN_PAR > simpleExpression()< CLOSE_PAR > 
 }
-{ operation = < IDENTIFIER >
+
+void simpleExpression() :
+{
+  Token operation; 
+  Object arg0, arg1 = null, arg2 = null;
+}
+{
+  operation = < IDENTIFIER >
   < OPEN_PAR >
-  target = path()
-  (< COMMA >
   arg0 = value()
   (< COMMA >
-  arg1 = value())?)?
+  arg1 = value()
+  (< COMMA >
+  arg2 = value())?)?
   < CLOSE_PAR > 
   { 
-      handler.onExpression(operation.image, target, arg0, arg1);
-  }  
+      handler.onExpression(operation.image, arg0, arg1, arg2);
+  }
 }
 
 Path path() :
@@ -96,7 +102,8 @@ Object value() :
 {
   (o = stringValue() |
    o = numericValue() |
-   o = listValue())
+   o = listValue() |
+   o = path() )
   { return o; }   
 }
 
