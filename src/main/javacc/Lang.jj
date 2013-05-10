@@ -1,0 +1,132 @@
+options {
+   STATIC = false ;
+}
+PARSER_BEGIN(PredicateParser)
+package pparser;
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.math.BigDecimal;
+
+/**
+ * A predicate-like syntax predicates parse
+ * @author flbulgarelli
+ */
+public class PredicateParser {
+  private EventHandler handler;
+  
+  public void setEventHandler(EventHandler handler) {
+    this.handler = handler;
+  }
+
+  public static void parse(String expression, EventHandler handler) {
+    try {
+      PredicateParser parser = new PredicateParser(new ByteArrayInputStream(expression.getBytes()));
+      parser.setEventHandler(handler);
+      parser.doParse();
+    } catch (ParseException e) {
+      throw new IllegalArgumentException("Syntax error in date expression " + expression + ". Cause: "
+        + e.getMessage());
+    }
+  }
+}
+PARSER_END(PredicateParser)
+
+
+SKIP : { " " | "\n" | "\r" | "\t" }
+
+TOKEN : { < COMMA : "," > }
+
+TOKEN : { < DOT : "." > }
+
+TOKEN : { < OPEN_PAR : "(" > }
+TOKEN : { < CLOSE_PAR : ")" > }
+TOKEN : { < OPEN_BRACKET : "[" > }
+TOKEN : { < CLOSE_BRACKET : "]" > }
+
+TOKEN : { < IDENTIFIER : ["a"-"z","A"-"Z", "_"](["a"-"z","A"-"Z","0"-"9"])* > }
+
+TOKEN : { < NUMBER :  (["0"-"9",".", "+", "-"])+ > }
+TOKEN : { < STRING :  "\"" (~["\""])* "\"" > }
+
+
+void doParse() : 
+{ }
+{ 
+   expression() ( < COMMA > expression() )* 
+}
+
+void expression() :
+{ 
+ Token operation; 
+ Object arg0 = null, arg1 = null;
+ Path target = null; 
+}
+{ operation = < IDENTIFIER >
+  < OPEN_PAR >
+  target = path()
+  (< COMMA >
+  arg0 = value()
+  (< COMMA >
+  arg1 = value())?)?
+  < CLOSE_PAR > 
+  { 
+      handler.onExpression(operation.image, target, arg0, arg1);
+  }  
+}
+
+Path path() :
+{ 
+  PathBuilder pathBuilder = new PathBuilder();
+  Token route = null; 
+}
+{
+  route = < IDENTIFIER >
+  {  pathBuilder.addRoute(route.image); }
+  (< DOT >
+  route = < IDENTIFIER > 
+  { pathBuilder.addRoute(route.image); })*
+  
+  { return pathBuilder.build(); }
+}
+
+
+Object value() :
+{ Object o = null; }
+{
+  (o = stringValue() |
+   o = numericValue() |
+   o = listValue())
+  { return o; }   
+}
+
+String stringValue() :
+{ Token v; }
+{
+  v =  <STRING>
+  { return v.image; }
+}
+
+BigDecimal numericValue() :
+{ Token v; }
+{
+  v =  <NUMBER>
+  { return new BigDecimal(v.image); }
+}
+
+
+List<Object> listValue() :
+{ List list = new ArrayList(); 
+  Object element = null; 
+}
+{	
+	<OPEN_BRACKET>
+	(element = value()
+	{ list.add(element); } 
+	( < COMMA > element = value() 
+	  { list.add(element); }
+	)*)?	
+	<CLOSE_BRACKET>
+	{ return list; }
+}
+
