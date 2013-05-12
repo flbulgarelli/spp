@@ -44,7 +44,8 @@ PARSER_END(PredicateParser)
 SKIP : { " " | "\n" | "\r" | "\t" }
 
 TOKEN : { < COMMA : "," > }
-TOKEN : { < SEMI_COLON : ";" > }
+TOKEN : { < AND : "and" > }
+TOKEN : { < OR : "or" > }
 
 TOKEN : { < DOT : "." > }
 
@@ -86,13 +87,13 @@ void doParse() :
 void predicateLevel1() :
 { }
 {
-   predicateLevel2() ( < SEMI_COLON > predicateLevel2() { handler.orPredicate(); } )* 
+   predicateLevel2() ( < OR > predicateLevel2() { handler.orPredicate(); } )* 
 }
 
 void predicateLevel2() :
 {}
 {
-   predicateLevel3() ( < COMMA > predicateLevel3() { handler.andPredicate(); } )*
+   predicateLevel3() ( < AND > predicateLevel3() { handler.andPredicate(); } )*
 }
 
 void predicateLevel3() :
@@ -184,7 +185,7 @@ List<Object> listValue() :
 	<OPEN_BRACKET>
 	(element = value()
 	{ list.add(element); } 
-	( < COMMA > element = value() 
+	( < AND > element = value() 
 	  { list.add(element); }
 	)*)?	
 	<CLOSE_BRACKET>

@@ -8,18 +8,18 @@ public class LogicConnectorExpressionParsingTest extends AbstractParsingTest {
 
   @Test
   public void can_parse_disjunction_predicates() throws Exception {
-    assertParse("f(x) ; g(y)", OR(KEYWORD("f", VAR("x")), KEYWORD("g", VAR("y"))));
+    assertParse("f(x) or g(y)", OR(KEYWORD("f", VAR("x")), KEYWORD("g", VAR("y"))));
   }
 
   @Test
   public void can_parse_conjunction_predicates() throws Exception {
-    assertParse("f(x) , g(y)", AND(KEYWORD("f", VAR("x")), KEYWORD("g", VAR("y"))));
+    assertParse("f(x) and g(y)", AND(KEYWORD("f", VAR("x")), KEYWORD("g", VAR("y"))));
   }
 
   
   @Test
   public void disjunction_takes_precedende_over_conjunction() throws Exception {
-    assertParse("f(x) ; g(x) , h(x)", //
+    assertParse("f(x) or g(x) and h(x)", //
       OR( //
         KEYWORD("f", VAR("x")), //
         AND( //
@@ -29,7 +29,7 @@ public class LogicConnectorExpressionParsingTest extends AbstractParsingTest {
 
   @Test
   public void parenthesis_change_asociativity() throws Exception {
-    assertParse("f(x) , (g(x) ; h(x))", //
+    assertParse("f(x) and (g(x) or h(x))", //
       AND( //
         KEYWORD("f", VAR("x")), //
         OR( //

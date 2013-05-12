@@ -11,42 +11,42 @@ import pparser.ast.Predicate;
 public class SimpleExpressionParsingTest extends AbstractParsingTest {
 
   @Test
-  public void can_parse_unary_predicates() throws Exception {
+  public void can_parse_unary_predicates()  {
     assertParse("f(x)", KEYWORD("f", VAR("x")));
   }
 
   @Test
-  public void can_parse_binary_keyword_predicates() throws Exception {
+  public void can_parse_binary_keyword_predicates()  {
     assertParse("f(x, y)", KEYWORD("f", VAR("x"), VAR("y")));
   }
 
   @Test
-  public void can_parse_ternary_predicates() throws Exception {
+  public void can_parse_ternary_predicates()  {
     assertParse("f(x, y, z)", KEYWORD("f", VAR("x"), VAR("y"), VAR("z")));
   }
 
   @Test
-  public void can_parse_predicates_with_string_literals() throws Exception {
+  public void can_parse_predicates_with_string_literals()  {
     assertParse("f(x, \"y\")", KEYWORD("f", VAR("x"), "y"));
   }
 
   @Test
-  public void can_parse_predicates_with_number_literals() throws Exception {
+  public void can_parse_predicates_with_number_literals()  {
     assertParse("f(x, 1)", KEYWORD("f", VAR("x"), d(1)));
   }
 
   @Test
-  public void can_parse_predicates_with_parenthesis() throws Exception {
-    PredicateParser.tryParse("(f(x) , g(x))");
+  public void can_parse_predicates_with_parenthesis()  {
+    PredicateParser.tryParse("(f(x) and g(x))");
   }
 
   @Test
-  public void is_whitespace_insensitive() throws Exception {
+  public void is_whitespace_insensitive()  {
     assertParse(" ( f ( x ) ) ", KEYWORD("f", VAR("x")));
   }
 
   @Test
-  public void can_parse_neq_predicate() throws Exception {
+  public void can_parse_neq_predicate()  {
     Predicate expected = OP(NEQ, VAR("x"), VAR("y"));
     assertParse("x <> y", expected);
     assertParse("x != y", expected);
@@ -55,12 +55,17 @@ public class SimpleExpressionParsingTest extends AbstractParsingTest {
   }
 
   @Test
-  public void supports_operator_predicate() throws Exception {
+  public void can_parse_operator_predicate()  {
     PredicateParser.tryParse(" x = y ");
     PredicateParser.tryParse(" x > y ");
     PredicateParser.tryParse(" x < y ");
     PredicateParser.tryParse(" x <= y ");
     PredicateParser.tryParse(" x >= y ");
+  }
+  
+  @Test
+  public void can_parse_paths_wih_dots()  {
+    assertParse("f(x.y)", KEYWORD("f", VAR("x", "y")));
   }
 
 
