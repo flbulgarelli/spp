@@ -38,7 +38,6 @@ public class KeywordPredicate extends ValueObject<KeywordPredicate> implements P
     return new KeywordPredicate(operation, getAtOrNull(0, args), getAtOrNull(1, args), getAtOrNull(2, args));
   }
 
-  @SafeVarargs
   private static <T> T getAtOrNull(int index, T... elements) {
     return index < elements.length ? elements[index] : null;
   }

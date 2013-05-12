@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PathBuilder {
 
-  private List<String> routes = new LinkedList<>();
+  private List<String> routes = new LinkedList<String>();
 
   public Path build() {
     return new Path(routes);
