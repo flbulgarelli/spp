@@ -3,10 +3,12 @@ package pparser;
 import java.util.Arrays;
 import java.util.List;
 
+import pparser.internal.ValueObject;
+
 import net.sf.staccatocommons.lang.value.RelevantState;
 import net.sf.staccatocommons.restrictions.check.NonNull;
 
-public class Path {
+public class Path extends ValueObject<Path> {
 
   private static final RelevantState<Path> STATE = new RelevantState<Path>(1) {
     protected void collectState(@NonNull Path object, @NonNull RelevantState.StateCollector s) {
@@ -29,17 +31,7 @@ public class Path {
   }
 
   @Override
-  public String toString() {
-    return STATE.toString(this);
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    return STATE.equals(this, obj);
-  }
-
-  @Override
-  public int hashCode() {
-    return STATE.hashCode(this);
+  protected RelevantState<Path> state() {
+    return STATE;
   }
 }

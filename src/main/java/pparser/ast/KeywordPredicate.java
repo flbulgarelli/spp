@@ -1,9 +1,10 @@
 package pparser.ast;
 
+import pparser.internal.ValueObject;
 import net.sf.staccatocommons.lang.value.RelevantState;
 import net.sf.staccatocommons.restrictions.check.NonNull;
 
-public class KeywordPredicate implements Predicate {
+public class KeywordPredicate extends ValueObject<KeywordPredicate> implements Predicate {
 
   private static final RelevantState<KeywordPredicate> STATE = new RelevantState<KeywordPredicate>(4) {
     protected void collectState(@NonNull KeywordPredicate object, @NonNull RelevantState.StateCollector s) {
@@ -29,18 +30,8 @@ public class KeywordPredicate implements Predicate {
   }
 
   @Override
-  public int hashCode() {
-    return STATE.hashCode(this);
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    return STATE.equals(this, other);
-  }
-
-  @Override
-  public String toString() {
-    return STATE.toString(this);
+  protected RelevantState<KeywordPredicate> state() {
+    return STATE;
   }
 
   public static KeywordPredicate from(String operation, Object... args) {

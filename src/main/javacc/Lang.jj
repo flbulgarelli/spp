@@ -86,13 +86,13 @@ void doParse() :
 void predicateLevel1() :
 { }
 {
-   predicateLevel2() ( < COMMA > predicateLevel2() )* 
+   predicateLevel2() ( < SEMI_COLON > predicateLevel2() { handler.orPredicate(); } )* 
 }
 
 void predicateLevel2() :
 {}
 {
-   predicateLevel3() ( < SEMI_COLON > predicateLevel3() )*
+   predicateLevel3() ( < COMMA > predicateLevel3() { handler.andPredicate(); } )*
 }
 
 void predicateLevel3() :
@@ -117,7 +117,7 @@ void keywordPredicate() :
   arg2 = value())?)?
   < CLOSE_PAR > 
   { 
-      handler.onKeywordPredicate(operation.image, arg0, arg1, arg2);
+      handler.keywordPredicate(operation.image, arg0, arg1, arg2);
   }
 }
 
@@ -131,7 +131,7 @@ void operatorPredicate() :
   (operator = operator() ) 
   arg1 = value()
   { 
-      handler.onOperatorPredicate(operator, arg0, arg1);
+      handler.operatorPredicate(operator, arg0, arg1);
   }
 }
 

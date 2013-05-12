@@ -16,6 +16,7 @@ public class LogicConnectorExpressionParsingTest extends AbstractParsingTest {
     assertParse("f(x) , g(y)", AND(KEYWORD("f", VAR("x")), KEYWORD("g", VAR("y"))));
   }
 
+  
   @Test
   public void disjunction_takes_precedende_over_conjunction() throws Exception {
     assertParse("f(x) ; g(x) , h(x)", //
@@ -27,7 +28,12 @@ public class LogicConnectorExpressionParsingTest extends AbstractParsingTest {
   }
 
   @Test
-  public void can_parse_nested_logical_connector_predicates() throws Exception {
-    PredicateParser.tryParse("f(x) , (g(x) ; h(x))");
+  public void parenthesis_change_asociativity() throws Exception {
+    assertParse("f(x) , (g(x) ; h(x))", //
+      AND( //
+        KEYWORD("f", VAR("x")), //
+        OR( //
+          KEYWORD("g", VAR("x")), //
+          KEYWORD("h", VAR("x")))));
   }
 }

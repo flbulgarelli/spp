@@ -3,8 +3,9 @@ package pparser.ast;
 import net.sf.staccatocommons.lang.value.RelevantState;
 import net.sf.staccatocommons.restrictions.check.NonNull;
 import pparser.Operator;
+import pparser.internal.ValueObject;
 
-public class OperatorPredicate implements Predicate {
+public class OperatorPredicate extends ValueObject<OperatorPredicate> implements Predicate {
 
   private static final RelevantState<OperatorPredicate> STATE = new RelevantState<OperatorPredicate>(3) {
     protected void collectState(@NonNull OperatorPredicate object, @NonNull RelevantState.StateCollector s) {
@@ -28,22 +29,8 @@ public class OperatorPredicate implements Predicate {
   }
 
   @Override
-  public String toString() {
-    return STATE.toString(this);
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    return STATE.equals(this, obj);
-  }
-
-  @Override
-  public int hashCode() {
-    return STATE.hashCode(this);
-  }
-
-  public static OperatorPredicate from(Operator eq, Object arg0, Object arg1) {
-    return new OperatorPredicate(eq, arg0, arg1);
+  protected RelevantState<OperatorPredicate> state() {
+    return STATE;
   }
 
 }
