@@ -25,9 +25,13 @@ public class PredicateParser {
       parser.setEventHandler(handler);
       parser.doParse();
     } catch (ParseException e) {
-      throw new IllegalArgumentException("Syntax error in date expression " + expression + ". Cause: "
+      throw new IllegalArgumentException("Syntax error in predicate expression " + expression + ". Cause: "
         + e.getMessage());
     }
+  }
+  
+  public static void tryParse(String expression) {
+    parse(expression, new NullEventHandler());
   }
   
   public static String parseString(String string) {
@@ -53,20 +57,27 @@ TOKEN : { < IDENTIFIER : ["a"-"z","A"-"Z", "_"](["a"-"z","A"-"Z","0"-"9"])* > }
 TOKEN : { < NUMBER :  (["0"-"9",".", "+", "-"])+ > }
 TOKEN : { < STRING :  "\"" (~["\""])* "\"" > }
 
+TOKEN : { < EQ : "=" >  }
+TOKEN : { < GT : ">" >  }
+TOKEN : { < LT : "<" >  }
+TOKEN : { < GTE : ">=" >  }
+TOKEN : { < LTE : "<=" >  }
+TOKEN : { < NEQ : "<>" | "!=" | "/=" | "\\=" >  }
+
 
 void doParse() : 
 { }
 { 
-   expression() ( < COMMA > expression() )* 
+   predicate() ( < COMMA > predicate() )* 
 }
 
-void expression() :
+void predicate() :
 {}
 { 
-  simpleExpression() | < OPEN_PAR > simpleExpression()< CLOSE_PAR > 
+  keywordPredicate() | < OPEN_PAR > keywordPredicate()< CLOSE_PAR > 
 }
 
-void simpleExpression() :
+void keywordPredicate() :
 {
   Token operation; 
   Object arg0, arg1 = null, arg2 = null;
@@ -81,7 +92,7 @@ void simpleExpression() :
   arg2 = value())?)?
   < CLOSE_PAR > 
   { 
-      handler.onExpression(operation.image, arg0, arg1, arg2);
+      handler.onKeywordPredicate(operation.image, arg0, arg1, arg2);
   }
 }
 

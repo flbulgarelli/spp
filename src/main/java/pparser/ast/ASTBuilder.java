@@ -3,19 +3,26 @@ package pparser.ast;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.sf.staccatocommons.restrictions.check.NonNull;
+
 import pparser.EventHandler;
 
 public class ASTBuilder implements EventHandler {
 
-  private List<Expression> expressions = new LinkedList<>();
+  private List<Predicate> predicates = new LinkedList<>();
 
   @Override
-  public void onExpression(String operation, Object arg0, Object arg1, Object arg2) {
-    expressions.add(new Expression(operation, arg0, arg1, arg2));
+  public void onKeywordPredicate(String operation, Object arg0, Object arg1, Object arg2) {
+    predicates.add(new Keyword(operation, arg0, arg1, arg2));
   }
 
-  public List<Expression> build() {
-    return expressions;
+  @Override
+  public void onOperatorPredicate(@NonNull String operation, @NonNull Object arg0, @NonNull Object arg1) {
+    // TODO Auto-generated method stub
+  }
+
+  public List<Predicate> build() {
+    return predicates;
   }
 
 }
