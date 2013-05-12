@@ -7,17 +7,17 @@ public class KeywordPredicate implements Predicate {
 
   private static final RelevantState<KeywordPredicate> STATE = new RelevantState<KeywordPredicate>(4) {
     protected void collectState(@NonNull KeywordPredicate object, @NonNull RelevantState.StateCollector s) {
-      s.add(object.operation).add(object.arg0).add(object.arg1).add(object.arg2);
+      s.add(object.keyword).add(object.arg0).add(object.arg1).add(object.arg2);
     }
   };
 
-  private String operation;
+  private String keyword;
   private Object arg0;
   private Object arg1;
   private Object arg2;
 
-  public KeywordPredicate(String operation, Object arg0, Object arg1, Object arg2) {
-    this.operation = operation;
+  public KeywordPredicate(String keyword, Object arg0, Object arg1, Object arg2) {
+    this.keyword = keyword;
     this.arg0 = arg0;
     this.arg1 = arg1;
     this.arg2 = arg2;

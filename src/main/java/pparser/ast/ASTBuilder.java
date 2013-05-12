@@ -1,16 +1,16 @@
 package pparser.ast;
 
+import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Queue;
 
 import net.sf.staccatocommons.restrictions.check.NonNull;
-
 import pparser.EventHandler;
 import pparser.Operator;
 
 public class ASTBuilder implements EventHandler {
 
-  private List<Predicate> predicates = new LinkedList<>();
+  private Queue<Predicate> predicates = Collections.asLifoQueue(new LinkedList<Predicate>());
 
   @Override
   public void onKeywordPredicate(String operation, Object arg0, Object arg1, Object arg2) {
@@ -22,8 +22,8 @@ public class ASTBuilder implements EventHandler {
     predicates.add(new OperatorPredicate(operation, arg0, arg1));
   }
 
-  public List<Predicate> build() {
-    return predicates;
+  public Predicate build() {
+    return predicates.element();
   }
 
 }

@@ -44,6 +44,7 @@ PARSER_END(PredicateParser)
 SKIP : { " " | "\n" | "\r" | "\t" }
 
 TOKEN : { < COMMA : "," > }
+TOKEN : { < SEMI_COLON : ";" > }
 
 TOKEN : { < DOT : "." > }
 
@@ -64,7 +65,6 @@ TOKEN : { < GTE : ">=" >  }
 TOKEN : { < LTE : "<=" >  }
 TOKEN : { < NEQ : "<>" | "!=" | "/=" | "\\=" >  }
 
-
 Operator operator() :
 { Operator operator; }
 {
@@ -80,14 +80,26 @@ Operator operator() :
 void doParse() : 
 { }
 { 
-   predicate() ( < COMMA > predicate() )* 
+   predicateLevel1() 
 }
 
-void predicate() :
+void predicateLevel1() :
+{ }
+{
+   predicateLevel2() ( < COMMA > predicateLevel2() )* 
+}
+
+void predicateLevel2() :
+{}
+{
+   predicateLevel3() ( < SEMI_COLON > predicateLevel3() )*
+}
+
+void predicateLevel3() :
 {}
 { 
   LOOKAHEAD(2)
-  keywordPredicate()  | operatorPredicate() | < OPEN_PAR > predicate() < CLOSE_PAR > 
+  keywordPredicate()  | operatorPredicate() | < OPEN_PAR > predicateLevel1() < CLOSE_PAR > 
 }
 
 void keywordPredicate() :
