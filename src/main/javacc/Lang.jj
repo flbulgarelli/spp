@@ -65,6 +65,18 @@ TOKEN : { < LTE : "<=" >  }
 TOKEN : { < NEQ : "<>" | "!=" | "/=" | "\\=" >  }
 
 
+Operator operator() :
+{ Operator operator; }
+{
+  (  < EQ > { operator = Operator.EQ; }
+  | < GT > { operator = Operator.GT; }
+  | < LT > { operator = Operator.LT; } 
+  | < LTE > { operator = Operator.LTE; } 
+  | < GTE > { operator = Operator.GTE; } 
+  | < NEQ > { operator = Operator.NEQ; })
+   { return operator; }
+}
+
 void doParse() : 
 { }
 { 
@@ -74,7 +86,8 @@ void doParse() :
 void predicate() :
 {}
 { 
-  keywordPredicate() | < OPEN_PAR > keywordPredicate()< CLOSE_PAR > 
+  LOOKAHEAD(2)
+  keywordPredicate()  | operatorPredicate() | < OPEN_PAR > predicate() < CLOSE_PAR > 
 }
 
 void keywordPredicate() :
@@ -93,6 +106,20 @@ void keywordPredicate() :
   < CLOSE_PAR > 
   { 
       handler.onKeywordPredicate(operation.image, arg0, arg1, arg2);
+  }
+}
+
+void operatorPredicate() :
+{
+  Operator operator; 
+  Object arg0, arg1;
+}
+{
+  arg0 = value()
+  (operator = operator() ) 
+  arg1 = value()
+  { 
+      handler.onOperatorPredicate(operator, arg0, arg1);
   }
 }
 

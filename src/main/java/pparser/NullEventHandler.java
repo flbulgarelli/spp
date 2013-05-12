@@ -9,7 +9,7 @@ public class NullEventHandler implements EventHandler {
   }
 
   @Override
-  public void onOperatorPredicate(@NonNull String operation, @NonNull Object arg0, @NonNull Object arg1) {
+  public void onOperatorPredicate(@NonNull Operator operation, @NonNull Object arg0, @NonNull Object arg1) {
 
   }
 
