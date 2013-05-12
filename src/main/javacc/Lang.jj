@@ -29,6 +29,10 @@ public class PredicateParser {
         + e.getMessage());
     }
   }
+  
+  public static String parseString(String string) {
+    return string.substring(1, string.length() - 1);
+  }
 }
 PARSER_END(PredicateParser)
 
@@ -111,7 +115,7 @@ String stringValue() :
 { Token v; }
 {
   v =  <STRING>
-  { return v.image; }
+  { return parseString(v.image); }
 }
 
 BigDecimal numericValue() :
