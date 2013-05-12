@@ -12,10 +12,10 @@ public class KeywordPredicate extends ValueObject<KeywordPredicate> implements P
     }
   };
 
-  private String keyword;
-  private Object arg0;
-  private Object arg1;
-  private Object arg2;
+  private final String keyword;
+  private final Object arg0;
+  private final Object arg1;
+  private final Object arg2;
 
   public KeywordPredicate(String keyword, Object arg0, Object arg1, Object arg2) {
     this.keyword = keyword;
@@ -27,6 +27,22 @@ public class KeywordPredicate extends ValueObject<KeywordPredicate> implements P
   @Override
   public <T> T accept(PredicateVisitor<T> visitor) {
     return visitor.visit(this);
+  }
+
+  public String getKeyword() {
+    return keyword;
+  }
+
+  public Object getArg0() {
+    return arg0;
+  }
+
+  public Object getArg1() {
+    return arg1;
+  }
+
+  public Object getArg2() {
+    return arg2;
   }
 
   @Override

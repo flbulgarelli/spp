@@ -9,23 +9,35 @@ public class OperatorPredicate extends ValueObject<OperatorPredicate> implements
 
   private static final RelevantState<OperatorPredicate> STATE = new RelevantState<OperatorPredicate>(3) {
     protected void collectState(@NonNull OperatorPredicate object, @NonNull RelevantState.StateCollector s) {
-      s.add(object.eq).add(object.arg0).add(object.arg1);
+      s.add(object.operator).add(object.arg0).add(object.arg1);
     }
   };
 
-  private Operator eq;
-  private Object arg0;
-  private Object arg1;
+  private final Operator operator;
+  private final Object arg0;
+  private final Object arg1;
 
-  public OperatorPredicate(Operator eq, Object arg0, Object arg1) {
-    this.eq = eq;
+  public OperatorPredicate(Operator operator, Object arg0, Object arg1) {
+    this.operator = operator;
     this.arg0 = arg0;
     this.arg1 = arg1;
   }
-  
+
   @Override
   public <T> T accept(PredicateVisitor<T> visitor) {
     return visitor.visit(this);
+  }
+
+  public Operator getOperator() {
+    return operator;
+  }
+
+  public Object getArg0() {
+    return arg0;
+  }
+
+  public Object getArg1() {
+    return arg1;
   }
 
   @Override

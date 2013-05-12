@@ -5,6 +5,7 @@ import java.util.List;
 
 import pparser.internal.ValueObject;
 
+import net.sf.staccatocommons.collections.stream.Streams;
 import net.sf.staccatocommons.lang.value.RelevantState;
 import net.sf.staccatocommons.restrictions.check.NonNull;
 
@@ -33,5 +34,10 @@ public class Path extends ValueObject<Path> {
   @Override
   protected RelevantState<Path> state() {
     return STATE;
+  }
+  
+  @Override
+  public String toString() {
+    return Streams.from(routes).joinStrings(".");
   }
 }

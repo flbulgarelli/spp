@@ -22,8 +22,17 @@ public abstract class LogicalConnectorPredicate //
     this.arg1 = arg1;
   }
 
+  public Predicate getArg0() {
+    return arg0;
+  }
+
+  public Predicate getArg1() {
+    return arg1;
+  }
+
   @Override
   protected RelevantState<LogicalConnectorPredicate> state() {
     return STATE;
   }
+
 }
