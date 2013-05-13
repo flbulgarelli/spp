@@ -1,12 +1,12 @@
 package pparser.ast.dsl;
 
 import pparser.Operator;
-import pparser.Path;
 import pparser.ast.AndPredicate;
 import pparser.ast.KeywordPredicate;
 import pparser.ast.OperatorPredicate;
 import pparser.ast.OrPredicate;
 import pparser.ast.Predicate;
+import pparser.value.Path;
 
 public class DSL {
   public static Predicate AND(Predicate p1, Predicate p2) {

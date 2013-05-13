@@ -1,6 +1,5 @@
 package pparser;
 
-import net.sf.staccatocommons.restrictions.check.NonNull;
 
 public class NullEventHandler implements EventHandler {
 
@@ -9,7 +8,7 @@ public class NullEventHandler implements EventHandler {
   }
 
   @Override
-  public void operatorPredicate(@NonNull Operator operation, @NonNull Object arg0, @NonNull Object arg1) {
+  public void operatorPredicate(Operator operation, Object arg0, Object arg1) {
 
   }
 

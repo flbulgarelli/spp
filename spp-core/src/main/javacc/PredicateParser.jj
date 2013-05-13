@@ -14,15 +14,17 @@ import java.math.BigDecimal;
  */
 public class PredicateParser {
   private EventHandler handler;
+  private ValuesFactory factory;
   
   public void setEventHandler(EventHandler handler) {
     this.handler = handler;
   }
 
-  public static void parse(String expression, EventHandler handler) {
+  public static void parse(String expression, ValuesFactory factory, EventHandler handler) {
     try {
       PredicateParser parser = new PredicateParser(new ByteArrayInputStream(expression.getBytes()));
-      parser.setEventHandler(handler);
+      parser.handler = handler;
+      parser.factory = factory;
       parser.doParse();
     } catch (ParseException e) {
       throw new IllegalArgumentException("Syntax error in predicate expression " + expression + ". Cause: "
@@ -31,12 +33,9 @@ public class PredicateParser {
   }
   
   public static void tryParse(String expression) {
-    parse(expression, new NullEventHandler());
+    parse(expression, new NullValuesFactory(), new NullEventHandler());
   }
   
-  public static String parseString(String string) {
-    return string.substring(1, string.length() - 1);
-  }
 }
 PARSER_END(PredicateParser)
 
@@ -136,19 +135,19 @@ void operatorPredicate() :
   }
 }
 
-Path path() :
+Object path() :
 { 
-  PathBuilder pathBuilder = new PathBuilder();
+  List<String> routes = new ArrayList<String>();
   Token route = null; 
 }
 {
   route = < IDENTIFIER >
-  {  pathBuilder.addRoute(route.image); }
+  {  routes.add(route.image); }
   (< DOT >
   route = < IDENTIFIER > 
-  { pathBuilder.addRoute(route.image); })*
+  { routes.add(route.image); })*
   
-  { return pathBuilder.build(); }
+  { return factory.createPath(routes); }
 }
 
 
@@ -162,18 +161,18 @@ Object value() :
   { return o; }   
 }
 
-String stringValue() :
+Object stringValue() :
 { Token v; }
 {
   v =  <STRING>
-  { return parseString(v.image); }
+  { return factory.createString(v.image); }
 }
 
-BigDecimal numericValue() :
+Object numericValue() :
 { Token v; }
 {
   v =  <NUMBER>
-  { return new BigDecimal(v.image); }
+  { return factory.createNumber(v.image); }
 }
 
 
