@@ -1,6 +1,11 @@
 package pparser;
 
-
+/**
+ * Null implementation of {@link EventHandler}, that simply does nothing when a
+ * predicate detection event occurs.
+ * 
+ * @author flbulgarelli
+ */
 public class NullEventHandler implements EventHandler {
 
   @Override

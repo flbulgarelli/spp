@@ -20,6 +20,11 @@ public class PredicateParser {
     this.handler = handler;
   }
 
+  /***
+   * Parses the given expression, using a ValuesFactory for creating the values parsed, and
+   * and EventHandler, for observing the predicates detection events the parses produces.
+   * @throws IllegalArgumentException when the expression is not valid 
+   */
   public static void parse(String expression, ValuesFactory factory, EventHandler handler) {
     try {
       PredicateParser parser = new PredicateParser(new ByteArrayInputStream(expression.getBytes()));
@@ -32,6 +37,11 @@ public class PredicateParser {
     }
   }
   
+  /**
+   * Validates this expression is parseable.
+   *  
+   *  It fails with and exception if not possible. Otherwise, does nothing.  
+   */
   public static void tryParse(String expression) {
     parse(expression, new NullValuesFactory(), new NullEventHandler());
   }
