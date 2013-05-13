@@ -5,6 +5,13 @@ import java.util.List;
 
 import net.sf.staccatocommons.collections.stream.Streams;
 
+/**
+ * A sequence of routes that point to a variable in a predicate expression.
+ * 
+ * It is created by the {@link ValuesFactoryImpl}
+ * 
+ * @author flbulgarelli
+ */
 public final class Path {
 
   private final List<String> routes;

@@ -1,6 +1,15 @@
 package pparser.ast;
 
-
+/**
+ * Visitor for a {@link Predicate}s AST
+ * 
+ * @author flbulgarelli
+ * 
+ * @param <T>
+ *          the return type of the visitor
+ * 
+ * @see Visitor Pattern
+ */
 public interface PredicateVisitor<T> {
 
   T visit(KeywordPredicate predicate);

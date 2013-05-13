@@ -8,8 +8,18 @@ import net.sf.staccatocommons.restrictions.check.NonNull;
 import pparser.EventHandler;
 import pparser.Operator;
 
+/**
+ * {@link EventHandler} that builds and Abstract Syntax Tree of the pedicates
+ * expression.
+ * 
+ * @author flbulgarelli
+ */
 public class ASTBuilder implements EventHandler {
 
+  /**
+   * The implementation of this builder is based on a lifo queue - each predicate parsed
+   * is enqueued, and dequeued when a logical connector is detected. 
+   */
   private Queue<Predicate> predicates = Collections.asLifoQueue(new LinkedList<Predicate>());
 
   @Override

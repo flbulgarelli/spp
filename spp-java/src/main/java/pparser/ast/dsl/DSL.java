@@ -8,6 +8,11 @@ import pparser.ast.OrPredicate;
 import pparser.ast.Predicate;
 import pparser.value.Path;
 
+/**
+ * Small DSL for creating AST elements in a convenient manner
+ * 
+ * @author flbulgarelli
+ */
 public class DSL {
   public static Predicate AND(Predicate p1, Predicate p2) {
     return new AndPredicate(p1, p2);

@@ -4,6 +4,19 @@ import pparser.internal.ValueObject;
 import net.sf.staccatocommons.lang.value.RelevantState;
 import net.sf.staccatocommons.restrictions.check.NonNull;
 
+/***
+ * AST element for nullary, unary, binary and ternary predicates that have a
+ * keyword. For instance:
+ * 
+ * <code>
+ *  f(2, 1)
+ * </code>
+ * 
+ * is represented by a keyword predicate whose keyword is "f", and their args
+ * are 2, 1, and null, respectively.
+ * 
+ * @author flbulgarelli
+ */
 public class KeywordPredicate extends ValueObject<KeywordPredicate> implements Predicate {
 
   private static final RelevantState<KeywordPredicate> STATE = new RelevantState<KeywordPredicate>(4) {

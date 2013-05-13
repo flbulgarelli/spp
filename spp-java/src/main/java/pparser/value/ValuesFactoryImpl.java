@@ -18,6 +18,9 @@ public class ValuesFactoryImpl implements ValuesFactory {
     return new BigDecimal(tokenImage);
   }
 
+  /**
+   * Creates a {@link Path} instance for the given routes
+   */
   @Override
   public Object createPath(List<String> tokenImages) {
     return new Path(Collections.unmodifiableList(tokenImages));
