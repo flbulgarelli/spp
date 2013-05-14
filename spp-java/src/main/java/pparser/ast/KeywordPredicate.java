@@ -36,6 +36,22 @@ public class KeywordPredicate extends ValueObject<KeywordPredicate> implements P
     this.arg1 = arg1;
     this.arg2 = arg2;
   }
+  
+  public String getKeyword() {
+    return keyword;
+  }
+  
+  public Object getArg0() {
+    return arg0;
+  }
+  
+  public Object getArg1() {
+    return arg1;
+  }
+  
+  public Object getArg2() {
+    return arg2;
+  }
 
   @Override
   public <T> T accept(PredicateVisitor<T> visitor) {
