@@ -2,6 +2,7 @@ package pparser.ast.dsl;
 
 import pparser.Operator;
 import pparser.ast.AndPredicate;
+import pparser.ast.IdPredicate;
 import pparser.ast.KeywordPredicate;
 import pparser.ast.OperatorPredicate;
 import pparser.ast.OrPredicate;
@@ -32,6 +33,10 @@ public class DSL {
 
   public static Path VAR(String... routes) {
     return Path.from(routes);
+  }
+  
+  public static Predicate ID(Path path) {
+    return new IdPredicate(path);
   }
 
 }

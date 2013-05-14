@@ -108,9 +108,25 @@ void predicateLevel2() :
 void predicateLevel3() :
 {}
 { 
-  LOOKAHEAD(2)
-  keywordPredicate()  | operatorPredicate() | < OPEN_PAR > predicateLevel1() < CLOSE_PAR > 
+  LOOKAHEAD(< IDENTIFIER > < OPEN_PAR >)
+  keywordPredicate()  |
+  LOOKAHEAD(< IDENTIFIER > ( < DOT > < IDENTIFIER > )* (< EQ > | < NEQ > | < GT > | < LT > | < GTE > | < LTE >) ) 
+  operatorPredicate() | 
+  idPredicate() |
+  < OPEN_PAR > predicateLevel1() < CLOSE_PAR > 
 }
+
+void idPredicate() :
+{
+  Object arg0;
+}
+{
+  arg0 = path()
+  { 
+      handler.idPredicate(arg0);
+  }
+}
+
 
 void keywordPredicate() :
 {
@@ -120,11 +136,11 @@ void keywordPredicate() :
 {
   operation = < IDENTIFIER >
   < OPEN_PAR >
-  arg0 = value()
+  arg0 = expression()
   (< COMMA >
-  arg1 = value()
+  arg1 = expression()
   (< COMMA >
-  arg2 = value())?)?
+  arg2 = expression())?)?
   < CLOSE_PAR > 
   { 
       handler.keywordPredicate(operation.image, arg0, arg1, arg2);
@@ -137,9 +153,9 @@ void operatorPredicate() :
   Object arg0, arg1;
 }
 {
-  arg0 = value()
+  arg0 = expression()
   (operator = operator() ) 
-  arg1 = value()
+  arg1 = expression()
   { 
       handler.operatorPredicate(operator, arg0, arg1);
   }
@@ -161,7 +177,7 @@ Object path() :
 }
 
 
-Object value() :
+Object expression() :
 { Object o = null; }
 {
   (o = stringValue() |
@@ -192,9 +208,9 @@ List<Object> listValue() :
 }
 {	
 	<OPEN_BRACKET>
-	(element = value()
+	(element = expression()
 	{ list.add(element); } 
-	( < AND > element = value() 
+	( < AND > element = expression() 
 	  { list.add(element); }
 	)*)?	
 	<CLOSE_BRACKET>

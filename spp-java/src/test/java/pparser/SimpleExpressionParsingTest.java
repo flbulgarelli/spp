@@ -11,6 +11,11 @@ import pparser.ast.Predicate;
 public class SimpleExpressionParsingTest extends AbstractParsingTest {
 
   @Test
+  public void can_parse_id_predicates()  {
+    assertParse("x", ID(VAR("x")));
+  }
+  
+  @Test
   public void can_parse_unary_predicates()  {
     assertParse("f(x)", KEYWORD("f", VAR("x")));
   }

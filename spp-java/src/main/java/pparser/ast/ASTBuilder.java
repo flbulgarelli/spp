@@ -31,6 +31,11 @@ public class ASTBuilder implements EventHandler {
   public void operatorPredicate(@NonNull Operator operation, @NonNull Object arg0, @NonNull Object arg1) {
     predicates.add(new OperatorPredicate(operation, arg0, arg1));
   }
+  
+  @Override
+  public void idPredicate(Object arg0) {
+    predicates.add(new IdPredicate(arg0));
+  }
 
   public Predicate build() {
     return predicates.element();

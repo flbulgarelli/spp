@@ -40,4 +40,6 @@ public interface EventHandler {
    */
   void andPredicate();
 
+  void idPredicate(Object arg0);
+
 }

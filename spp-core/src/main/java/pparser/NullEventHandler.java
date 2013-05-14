@@ -25,4 +25,8 @@ public class NullEventHandler implements EventHandler {
   public void andPredicate() {
   }
 
+  @Override
+  public void idPredicate(Object arg0) {
+  }
+
 }

@@ -19,4 +19,6 @@ public interface PredicateVisitor<T> {
   T visit(AndPredicate andPredicate);
 
   T visit(OrPredicate orPredicate);
+
+  T visit(IdPredicate idPredicate);
 }
