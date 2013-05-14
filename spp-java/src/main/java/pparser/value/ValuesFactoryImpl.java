@@ -23,7 +23,7 @@ public class ValuesFactoryImpl implements ValuesFactory {
    */
   @Override
   public Object createPath(List<String> tokenImages) {
-    return new Path(Collections.unmodifiableList(tokenImages));
+    return new Path(tokenImages);
   }
 
 }

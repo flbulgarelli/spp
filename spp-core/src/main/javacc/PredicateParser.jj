@@ -65,7 +65,7 @@ TOKEN : { < CLOSE_BRACKET : "]" > }
 
 TOKEN : { < IDENTIFIER : ["a"-"z","A"-"Z", "_"](["a"-"z","A"-"Z","0"-"9"])* > }
 
-TOKEN : { < NUMBER :  (["0"-"9",".", "+", "-"])+ > }
+TOKEN : { < NUMBER :  (["0"-"9"])+("."["0"-"9"])? > }
 TOKEN : { < STRING :  "\"" (~["\""])* "\"" > }
 
 TOKEN : { < EQ : "=" >  }
@@ -74,6 +74,8 @@ TOKEN : { < LT : "<" >  }
 TOKEN : { < GTE : ">=" >  }
 TOKEN : { < LTE : "<=" >  }
 TOKEN : { < NEQ : "<>" | "!=" | "/=" | "\\=" >  }
+
+TOKEN : { < PLUS : "+" > }
 
 Operator operator() :
 { Operator operator; }
@@ -118,12 +120,11 @@ void predicateLevel3() :
 
 void idPredicate() :
 {
-  Object arg0;
 }
 {
-  arg0 = path()
+  path()
   { 
-      handler.idPredicate(arg0);
+      handler.idPredicate();
   }
 }
 
@@ -131,37 +132,36 @@ void idPredicate() :
 void keywordPredicate() :
 {
   Token operation; 
-  Object arg0, arg1 = null, arg2 = null;
+  int arity = 1;
 }
 {
   operation = < IDENTIFIER >
   < OPEN_PAR >
-  arg0 = expression()
+  expressionLevel1()
   (< COMMA >
-  arg1 = expression()
+  expressionLevel1() { arity++; }
   (< COMMA >
-  arg2 = expression())?)?
+  expressionLevel1() { arity++; })?)?
   < CLOSE_PAR > 
   { 
-      handler.keywordPredicate(operation.image, arg0, arg1, arg2);
+      handler.keywordPredicate(operation.image, arity);
   }
 }
 
 void operatorPredicate() :
 {
   Operator operator; 
-  Object arg0, arg1;
 }
 {
-  arg0 = expression()
+  expressionLevel1()
   (operator = operator() ) 
-  arg1 = expression()
+  expressionLevel1()
   { 
-      handler.operatorPredicate(operator, arg0, arg1);
+      handler.operatorPredicate(operator);
   }
 }
 
-Object path() :
+void path() :
 { 
   List<String> routes = new ArrayList<String>();
   Token route = null; 
@@ -173,47 +173,52 @@ Object path() :
   route = < IDENTIFIER > 
   { routes.add(route.image); })*
   
-  { return factory.createPath(routes); }
+  { handler.pathExpression(factory.createPath(routes)); }
 }
 
 
-Object expression() :
-{ Object o = null; }
+void expressionLevel1() :
+{}
 {
-  (o = stringValue() |
-   o = numericValue() |
-   o = listValue() |
-   o = path() )
-  { return o; }   
+  expressionLevel2() ( < PLUS > expressionLevel2()  { handler.operatorExpression("+");} )*
 }
 
-Object stringValue() :
+void expressionLevel2() :
+{}
+{
+  (stringValue() |
+   numericValue() |
+   listValue() |
+   path() )
+}
+
+void stringValue() :
 { Token v; }
 {
   v =  <STRING>
-  { return factory.createString(v.image); }
+  { handler.stringExpression(factory.createString(v.image)); }
 }
 
-Object numericValue() :
+void numericValue() :
 { Token v; }
 {
   v =  <NUMBER>
-  { return factory.createNumber(v.image); }
+  { handler.numberExpression(factory.createNumber(v.image)); }
 }
 
 
-List<Object> listValue() :
-{ List list = new ArrayList(); 
-  Object element = null; 
+void listValue() :
+{  
+  int size = 0; 
 }
 {	
 	<OPEN_BRACKET>
-	(element = expression()
-	{ list.add(element); } 
-	( < AND > element = expression() 
-	  { list.add(element); }
+	(expressionLevel1()
+	{ size++; } 
+	( < AND > expressionLevel1() 
+	  { size++; }
 	)*)?	
 	<CLOSE_BRACKET>
-	{ return list; }
+	{ handler.listExpression(size); }
 }
 

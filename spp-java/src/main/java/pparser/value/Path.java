@@ -1,7 +1,11 @@
 package pparser.value;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
+import pparser.ast.ASTElement;
+import pparser.ast.ASTElementVisitor;
 
 import net.sf.staccatocommons.collections.stream.Streams;
 
@@ -12,12 +16,12 @@ import net.sf.staccatocommons.collections.stream.Streams;
  * 
  * @author flbulgarelli
  */
-public final class Path {
+public final class Path implements ASTElement {
 
   private final List<String> routes;
 
   public Path(List<String> routes) {
-    this.routes = routes;
+    this.routes = Collections.unmodifiableList(routes);
   }
 
   public List<String> getRoutes() {
@@ -51,6 +55,11 @@ public final class Path {
   @Override
   public String toString() {
     return Streams.from(routes).joinStrings(".");
+  }
+  
+  @Override
+  public <T> T accept(ASTElementVisitor<T> visitor) {
+    return visitor.visit(this);
   }
 
 }

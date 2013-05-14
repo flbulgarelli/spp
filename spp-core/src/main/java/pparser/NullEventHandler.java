@@ -9,12 +9,11 @@ package pparser;
 public class NullEventHandler implements EventHandler {
 
   @Override
-  public void keywordPredicate(String operation, Object arg0, Object arg1, Object arg2) {
+  public void keywordPredicate(String operation, int arity) {
   }
 
   @Override
-  public void operatorPredicate(Operator operation, Object arg0, Object arg1) {
-
+  public void operatorPredicate(Operator operation) {
   }
 
   @Override
@@ -26,7 +25,28 @@ public class NullEventHandler implements EventHandler {
   }
 
   @Override
-  public void idPredicate(Object arg0) {
+  public void idPredicate() {
+  }
+
+  @Override
+  public void listExpression(int size) {
+  }
+
+  @Override
+  public void numberExpression(Object number) {
+  }
+
+  @Override
+  public void operatorExpression(String operator) {
+  }
+
+  @Override
+  public void stringExpression(Object string) {
+  }
+  
+  @Override
+  public void pathExpression(Object path) {
+    
   }
 
 }

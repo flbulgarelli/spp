@@ -5,7 +5,7 @@ import net.sf.staccatocommons.restrictions.check.NonNull;
 import pparser.Operator;
 import pparser.internal.ValueObject;
 
-public class OperatorPredicate extends ValueObject<OperatorPredicate> implements Predicate {
+public class OperatorPredicate extends ValueObject<OperatorPredicate> implements ASTElement {
 
   private static final RelevantState<OperatorPredicate> STATE = new RelevantState<OperatorPredicate>(3) {
     protected void collectState(@NonNull OperatorPredicate object, @NonNull RelevantState.StateCollector s) {
@@ -36,7 +36,7 @@ public class OperatorPredicate extends ValueObject<OperatorPredicate> implements
   }
   
   @Override
-  public <T> T accept(PredicateVisitor<T> visitor) {
+  public <T> T accept(ASTElementVisitor<T> visitor) {
     return visitor.visit(this);
   }
 

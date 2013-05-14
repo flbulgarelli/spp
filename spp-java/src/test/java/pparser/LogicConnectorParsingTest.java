@@ -4,7 +4,7 @@ import static pparser.ast.dsl.DSL.*;
 
 import org.junit.Test;
 
-public class LogicConnectorExpressionParsingTest extends AbstractParsingTest {
+public class LogicConnectorParsingTest extends AbstractParsingTest {
 
   @Test
   public void can_parse_disjunction_predicates() throws Exception {

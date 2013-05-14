@@ -12,21 +12,15 @@ package pparser;
 public interface EventHandler {
 
   /**
-   * Event that denotes that an n-ariy keyword predicate has been parsed.
-   * 
-   * Only keyword predicates of up to 3 arguments are supported.
-   * 
-   * If the predicate has less than 3 arguments, the remaning arguments are
-   * passed as <code>null</code>
+   * Event that denotes that an n-ariy keyword predicate has been parsed, with 0 < n <= 3.
    * */
-  void keywordPredicate(String operation, Object arg0, Object arg1, Object arg2);
+  void keywordPredicate(String operation, int arity);
 
   /**
    * Event that denotes that a binary operator predicate has been parsed.
    * 
-   * Both args are not null
    */
-  void operatorPredicate(Operator operation, Object arg0, Object arg1);
+  void operatorPredicate(Operator operation);
 
   /**
    * Event that an OR predicate has been detected. This predicate performs the
@@ -40,6 +34,17 @@ public interface EventHandler {
    */
   void andPredicate();
 
-  void idPredicate(Object arg0);
+  void idPredicate();
+  
+  void operatorExpression(String operator);
+
+  void stringExpression(Object string);
+
+  void numberExpression(Object number);
+
+  void pathExpression(Object path);
+  
+  void listExpression(int size);
+
 
 }

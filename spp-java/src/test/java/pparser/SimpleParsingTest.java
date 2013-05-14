@@ -1,18 +1,22 @@
 package pparser;
 
-import static net.sf.staccatocommons.numbers.Numbers.*;
 import static pparser.Operator.*;
 import static pparser.ast.dsl.DSL.*;
 
 import org.junit.Test;
 
-import pparser.ast.Predicate;
+import pparser.ast.ASTElement;
 
-public class SimpleExpressionParsingTest extends AbstractParsingTest {
+public class SimpleParsingTest extends AbstractParsingTest {
 
   @Test
   public void can_parse_id_predicates()  {
     assertParse("x", ID(VAR("x")));
+  }
+  
+  @Test
+  public void can_parse_id_predicates_with_dots()  {
+    assertParse("x.y", ID(VAR("x", "y")));
   }
   
   @Test
@@ -32,12 +36,12 @@ public class SimpleExpressionParsingTest extends AbstractParsingTest {
 
   @Test
   public void can_parse_predicates_with_string_literals()  {
-    assertParse("f(x, \"y\")", KEYWORD("f", VAR("x"), "y"));
+    assertParse("f(x, \"y\")", KEYWORD("f", VAR("x"), LIT("y")));
   }
 
   @Test
   public void can_parse_predicates_with_number_literals()  {
-    assertParse("f(x, 1)", KEYWORD("f", VAR("x"), d(1)));
+    assertParse("f(x, 1)", KEYWORD("f", VAR("x"), LIT(1)));
   }
 
   @Test
@@ -52,7 +56,7 @@ public class SimpleExpressionParsingTest extends AbstractParsingTest {
 
   @Test
   public void can_parse_neq_predicate()  {
-    Predicate expected = OP(NEQ, VAR("x"), VAR("y"));
+    ASTElement expected = OP(NEQ, VAR("x"), VAR("y"));
     assertParse("x <> y", expected);
     assertParse("x != y", expected);
     assertParse("x \\= y", expected);

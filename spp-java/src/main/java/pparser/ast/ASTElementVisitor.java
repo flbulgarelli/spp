@@ -1,7 +1,9 @@
 package pparser.ast;
 
+import pparser.value.Path;
+
 /**
- * Visitor for a {@link Predicate}s AST
+ * Visitor for a {@link ASTElement}s AST
  * 
  * @author flbulgarelli
  * 
@@ -10,7 +12,7 @@ package pparser.ast;
  * 
  * @see Visitor Pattern
  */
-public interface PredicateVisitor<T> {
+public interface ASTElementVisitor<T> {
 
   T visit(KeywordPredicate predicate);
 
@@ -21,4 +23,10 @@ public interface PredicateVisitor<T> {
   T visit(OrPredicate orPredicate);
 
   T visit(IdPredicate idPredicate);
+
+  T visit(Path path);
+
+  T visit(NumberExpression numberExpression);
+
+  T visit(StringExpression stringExpression);
 }
