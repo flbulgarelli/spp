@@ -13,9 +13,9 @@ public class IdPredicate extends ValueObject<IdPredicate> implements ASTElement 
     }
   };
 
-  private final Object arg0;
+  private final ASTElement arg0;
 
-  public IdPredicate(Object arg0) {
+  public IdPredicate(ASTElement arg0) {
     this.arg0 = arg0;
   }
 
@@ -24,7 +24,7 @@ public class IdPredicate extends ValueObject<IdPredicate> implements ASTElement 
     return visitor.visit(this);
   }
 
-  public Object getArg0() {
+  public ASTElement getArg0() {
     return arg0;
   }
 
