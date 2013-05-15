@@ -8,8 +8,8 @@ import net.sf.staccatocommons.restrictions.check.NonNull;
 import pparser.internal.ValueObject;
 
 /***
- * AST element for unary, binary and ternary predicates that have a
- * keyword. For instance:
+ * AST element for unary, binary and ternary predicates that have a keyword. For
+ * instance:
  * 
  * <code>
  *  f(2, 1)
@@ -39,23 +39,23 @@ public class KeywordPredicate extends ValueObject<KeywordPredicate> implements P
   public String getKeyword() {
     return keyword;
   }
-  
+
   public List<Expression> getArgs() {
     return args;
   }
-  
+
   public Expression getArg0() {
     return args.get(0);
   }
-  
+
   public Expression getArg1() {
     return args.get(1);
   }
-  
+
   public Expression getArg2() {
     return args.get(3);
   }
-  
+
   public int getArity() {
     return args.size();
   }

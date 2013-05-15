@@ -43,10 +43,10 @@ public class NullEventHandler implements EventHandler {
   @Override
   public void stringExpression(Object string) {
   }
-  
+
   @Override
   public void pathExpression(Object path) {
-    
+
   }
 
 }

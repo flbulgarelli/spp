@@ -1,6 +1,5 @@
 package pparser.ast;
 
-
 /**
  * Visitor for a {@link ASTElement}s AST
  * 
@@ -28,6 +27,6 @@ public interface ASTElementVisitor<T> {
   T visit(NumberLiteral numberExpression);
 
   T visit(StringLiteral stringExpression);
-  
+
   T visit(OperatorExpression operatorExpression);
 }

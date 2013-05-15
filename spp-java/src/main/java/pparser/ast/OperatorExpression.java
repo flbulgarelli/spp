@@ -11,7 +11,7 @@ public class OperatorExpression extends ValueObject<OperatorExpression> implemen
       s.add(object.operator).add(object.arg0).add(object.arg1);
     }
   };
-  
+
   private final ExpressionOperator operator;
   private final Expression arg0;
   private final Expression arg1;

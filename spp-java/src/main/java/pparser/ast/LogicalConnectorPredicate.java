@@ -21,11 +21,11 @@ public abstract class LogicalConnectorPredicate //
     this.arg0 = arg0;
     this.arg1 = arg1;
   }
-  
+
   public Predicate getArg0() {
     return arg0;
   }
-  
+
   public Predicate getArg1() {
     return arg1;
   }
@@ -34,5 +34,5 @@ public abstract class LogicalConnectorPredicate //
   protected RelevantState<LogicalConnectorPredicate> state() {
     return STATE;
   }
-  
+
 }

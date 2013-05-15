@@ -1,7 +1,6 @@
 package pparser.value;
 
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 
 import pparser.ValuesFactory;

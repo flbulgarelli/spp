@@ -29,7 +29,7 @@ public class ASTBuilder implements EventHandler {
   @Override
   public void keywordPredicate(String operation, int arity) {
     List<Expression> args = dequeue(arity);
-	pushElement(new KeywordPredicate(operation, Collections.unmodifiableList(args)));
+    pushElement(new KeywordPredicate(operation, Collections.unmodifiableList(args)));
   }
 
   @Override
@@ -93,7 +93,7 @@ public class ASTBuilder implements EventHandler {
   }
 
   @SuppressWarnings("unchecked")
-  protected  <T extends ASTElement>  List<T> dequeue(int n) {
+  protected <T extends ASTElement> List<T> dequeue(int n) {
     LinkedList<T> list = new LinkedList<T>();
     Queue<T> dequeuedElements = Collections.asLifoQueue(list);
     for (int i = 0; i < n; i++)

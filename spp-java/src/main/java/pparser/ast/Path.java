@@ -55,7 +55,7 @@ public final class Path implements Expression {
   public String toString() {
     return Streams.from(routes).joinStrings(".");
   }
-  
+
   @Override
   public <T> T accept(ASTElementVisitor<T> visitor) {
     return visitor.visit(this);

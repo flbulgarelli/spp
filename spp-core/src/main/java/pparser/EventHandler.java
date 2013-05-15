@@ -12,7 +12,8 @@ package pparser;
 public interface EventHandler {
 
   /**
-   * Event that denotes that an n-ariy keyword predicate has been parsed, with 0 < n <= 3.
+   * Event that denotes that an n-ariy keyword predicate has been parsed, with 0
+   * < n <= 3.
    * */
   void keywordPredicate(String operation, int arity);
 
@@ -35,7 +36,7 @@ public interface EventHandler {
   void andPredicate();
 
   void idPredicate();
-  
+
   void operatorExpression(ExpressionOperator operator);
 
   void stringExpression(Object string);
@@ -43,8 +44,7 @@ public interface EventHandler {
   void numberExpression(Object number);
 
   void pathExpression(Object path);
-  
-  void listExpression(int size);
 
+  void listExpression(int size);
 
 }

@@ -6,12 +6,11 @@ import org.junit.Test;
 
 public class LogicConnectorParsingTest extends AbstractParsingTest {
 
-  @Test(expected=RuntimeParseException.class)
+  @Test(expected = RuntimeParseException.class)
   public void rejects_illegal_connector() throws Exception {
     PredicateParser.tryParse("f(x) ord g(y)");
   }
 
-  
   @Test
   public void can_parse_disjunction_predicates() throws Exception {
     assertParse("f(x) or g(y)", OR(KEYWORD("f", VAR("x")), KEYWORD("g", VAR("y"))));
@@ -22,7 +21,6 @@ public class LogicConnectorParsingTest extends AbstractParsingTest {
     assertParse("f(x) and g(y)", AND(KEYWORD("f", VAR("x")), KEYWORD("g", VAR("y"))));
   }
 
-  
   @Test
   public void disjunction_takes_precedende_over_conjunction() throws Exception {
     assertParse("f(x) or g(x) and h(x)", //

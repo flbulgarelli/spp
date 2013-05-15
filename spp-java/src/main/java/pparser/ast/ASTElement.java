@@ -10,7 +10,7 @@ package pparser.ast;
  */
 public interface ASTElement {
 
-  /**Executes a polymorphic operation over this {@link ASTElement}*/
+  /** Executes a polymorphic operation over this {@link ASTElement} */
   <T> T accept(ASTElementVisitor<T> visitor);
 
 }

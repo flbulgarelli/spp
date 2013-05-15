@@ -22,19 +22,19 @@ public class OperatorPredicate extends ValueObject<OperatorPredicate> implements
     this.arg0 = arg0;
     this.arg1 = arg1;
   }
-  
+
   public PredicateOperator getOperator() {
     return operator;
   }
-  
+
   public Expression getArg0() {
     return arg0;
   }
-  
+
   public Expression getArg1() {
     return arg1;
   }
-  
+
   @Override
   public <T> T accept(ASTElementVisitor<T> visitor) {
     return visitor.visit(this);
