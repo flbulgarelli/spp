@@ -1,11 +1,10 @@
-package pparser.value;
+package pparser.ast;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import pparser.ast.ASTElement;
-import pparser.ast.ASTElementVisitor;
+import pparser.value.ValuesFactoryImpl;
 
 import net.sf.staccatocommons.collections.stream.Streams;
 
@@ -16,7 +15,7 @@ import net.sf.staccatocommons.collections.stream.Streams;
  * 
  * @author flbulgarelli
  */
-public final class Path implements ASTElement {
+public final class Path implements Expression {
 
   private final List<String> routes;
 

@@ -4,8 +4,8 @@ import net.sf.staccatocommons.lang.value.RelevantState;
 import net.sf.staccatocommons.restrictions.check.NonNull;
 import pparser.internal.ValueObject;
 
-public abstract class LiteralExpression<T> extends ValueObject<LiteralExpression<T>> implements ASTElement {
-  
+public abstract class LiteralExpression<T> extends ValueObject<LiteralExpression<T>> implements Expression {
+
   @SuppressWarnings("rawtypes")
   private static final RelevantState<LiteralExpression> STATE = new RelevantState<LiteralExpression>(1) {
     @Override
@@ -27,7 +27,7 @@ public abstract class LiteralExpression<T> extends ValueObject<LiteralExpression
   @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   protected RelevantState<LiteralExpression<T>> state() {
-    return (RelevantState)STATE;
+    return (RelevantState) STATE;
   }
 
 }

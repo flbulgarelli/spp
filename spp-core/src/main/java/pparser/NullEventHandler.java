@@ -13,7 +13,7 @@ public class NullEventHandler implements EventHandler {
   }
 
   @Override
-  public void operatorPredicate(Operator operation) {
+  public void operatorPredicate(PredicateOperator operation) {
   }
 
   @Override
@@ -37,7 +37,7 @@ public class NullEventHandler implements EventHandler {
   }
 
   @Override
-  public void operatorExpression(String operator) {
+  public void operatorExpression(ExpressionOperator operator) {
   }
 
   @Override

@@ -76,16 +76,35 @@ TOKEN : { < LTE : "<=" >  }
 TOKEN : { < NEQ : "<>" | "!=" | "/=" | "\\=" >  }
 
 TOKEN : { < PLUS : "+" > }
+TOKEN : { < MINUS : "-" > }
+TOKEN : { < MULT : "*" > }
+TOKEN : { < DIV : "/" > }
 
-Operator operator() :
-{ Operator operator; }
+PredicateOperator predicateOperator() :
+{ PredicateOperator operator; }
 {
-  (  < EQ > { operator = Operator.EQ; }
-  | < GT > { operator = Operator.GT; }
-  | < LT > { operator = Operator.LT; } 
-  | < LTE > { operator = Operator.LTE; } 
-  | < GTE > { operator = Operator.GTE; } 
-  | < NEQ > { operator = Operator.NEQ; })
+  (  < EQ > { operator = PredicateOperator.EQ; }
+  | < GT > { operator = PredicateOperator.GT; }
+  | < LT > { operator = PredicateOperator.LT; } 
+  | < LTE > { operator = PredicateOperator.LTE; } 
+  | < GTE > { operator = PredicateOperator.GTE; } 
+  | < NEQ > { operator = PredicateOperator.NEQ; })
+   { return operator; }
+}
+
+ExpressionOperator expressionOperatorLevel1() :
+{ ExpressionOperator operator; }
+{
+  ( < PLUS > { operator = ExpressionOperator.PLUS; }
+  | < MINUS > { operator = ExpressionOperator.MINUS; })
+  { return operator; }
+}
+
+ExpressionOperator expressionOperatorLevel2() :
+{ ExpressionOperator operator; }
+{
+  ( < MULT > { operator = ExpressionOperator.MULT; }
+  | < DIV > { operator = ExpressionOperator.DIV; })
    { return operator; }
 }
 
@@ -112,7 +131,7 @@ void predicateLevel3() :
 { 
   LOOKAHEAD(< IDENTIFIER > < OPEN_PAR >)
   keywordPredicate()  |
-  LOOKAHEAD(< IDENTIFIER > ( < DOT > < IDENTIFIER > )* (< EQ > | < NEQ > | < GT > | < LT > | < GTE > | < LTE >) ) 
+  LOOKAHEAD(< IDENTIFIER > ( < DOT > < IDENTIFIER > )* (predicateOperator()) ) 
   operatorPredicate() | 
   idPredicate() |
   < OPEN_PAR > predicateLevel1() < CLOSE_PAR > 
@@ -150,11 +169,11 @@ void keywordPredicate() :
 
 void operatorPredicate() :
 {
-  Operator operator; 
+  PredicateOperator operator; 
 }
 {
   expressionLevel1()
-  (operator = operator() ) 
+  (operator = predicateOperator() ) 
   expressionLevel1()
   { 
       handler.operatorPredicate(operator);
@@ -178,12 +197,22 @@ void path() :
 
 
 void expressionLevel1() :
-{}
+{ ExpressionOperator operator;  }
 {
-  expressionLevel2() ( < PLUS > expressionLevel2()  { handler.operatorExpression("+");} )*
+  expressionLevel2() (operator = expressionOperatorLevel1() expressionLevel2() {
+     handler.operatorExpression(operator);
+  })*
 }
 
 void expressionLevel2() :
+{ ExpressionOperator operator;  }
+{
+  expressionLevel3() (operator = expressionOperatorLevel2() expressionLevel3() { 
+     handler.operatorExpression(operator);
+  })*
+}
+
+void expressionLevel3() :
 {}
 {
   (stringValue() |

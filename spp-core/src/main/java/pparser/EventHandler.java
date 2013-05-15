@@ -20,7 +20,7 @@ public interface EventHandler {
    * Event that denotes that a binary operator predicate has been parsed.
    * 
    */
-  void operatorPredicate(Operator operation);
+  void operatorPredicate(PredicateOperator operation);
 
   /**
    * Event that an OR predicate has been detected. This predicate performs the
@@ -36,7 +36,7 @@ public interface EventHandler {
 
   void idPredicate();
   
-  void operatorExpression(String operator);
+  void operatorExpression(ExpressionOperator operator);
 
   void stringExpression(Object string);
 

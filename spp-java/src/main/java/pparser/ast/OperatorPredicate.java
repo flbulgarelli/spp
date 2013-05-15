@@ -2,7 +2,7 @@ package pparser.ast;
 
 import net.sf.staccatocommons.lang.value.RelevantState;
 import net.sf.staccatocommons.restrictions.check.NonNull;
-import pparser.Operator;
+import pparser.PredicateOperator;
 import pparser.internal.ValueObject;
 
 public class OperatorPredicate extends ValueObject<OperatorPredicate> implements ASTElement {
@@ -13,17 +13,17 @@ public class OperatorPredicate extends ValueObject<OperatorPredicate> implements
     }
   };
 
-  private Operator operator;
+  private PredicateOperator operator;
   private Object arg0;
   private Object arg1;
 
-  public OperatorPredicate(Operator operator, Object arg0, Object arg1) {
+  public OperatorPredicate(PredicateOperator operator, Object arg0, Object arg1) {
     this.operator = operator;
     this.arg0 = arg0;
     this.arg1 = arg1;
   }
   
-  public Operator getOperator() {
+  public PredicateOperator getOperator() {
     return operator;
   }
   

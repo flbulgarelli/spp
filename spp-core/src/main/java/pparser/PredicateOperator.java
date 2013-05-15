@@ -8,7 +8,7 @@ package pparser;
  * 
  * @author flbulgarelli
  */
-public enum Operator {
+public enum PredicateOperator {
   /** == operator */
   EQ,
   /** != operator */

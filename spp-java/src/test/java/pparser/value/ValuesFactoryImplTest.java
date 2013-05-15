@@ -6,6 +6,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import pparser.ast.Path;
+
 public class ValuesFactoryImplTest {
 
   @Test

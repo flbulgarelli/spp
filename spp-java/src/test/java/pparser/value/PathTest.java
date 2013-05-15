@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import pparser.value.Path;
+import pparser.ast.Path;
 
 public class PathTest {
 

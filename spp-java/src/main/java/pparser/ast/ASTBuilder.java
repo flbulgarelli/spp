@@ -8,8 +8,8 @@ import java.util.Queue;
 
 import net.sf.staccatocommons.restrictions.check.NonNull;
 import pparser.EventHandler;
-import pparser.Operator;
-import pparser.value.Path;
+import pparser.ExpressionOperator;
+import pparser.PredicateOperator;
 
 /**
  * {@link EventHandler} that builds and Abstract Syntax Tree of the pedicates
@@ -20,8 +20,9 @@ import pparser.value.Path;
 public class ASTBuilder implements EventHandler {
 
   /**
-   * The implementation of this builder is based on a lifo queue - each predicate parsed
-   * is enqueued, and dequeued when a logical connector is detected. 
+   * The implementation of this builder is based on a lifo queue - each
+   * predicate parsed is enqueued, and dequeued when a logical connector is
+   * detected.
    */
   private Queue<ASTElement> elements = Collections.asLifoQueue(new LinkedList<ASTElement>());
 
@@ -31,18 +32,14 @@ public class ASTBuilder implements EventHandler {
   }
 
   @Override
-  public void operatorPredicate(@NonNull Operator operation) {
+  public void operatorPredicate(@NonNull PredicateOperator operation) {
     List<ASTElement> args = dequeue(2);
     elements.add(new OperatorPredicate(operation, args.get(0), args.get(1)));
   }
-  
+
   @Override
   public void idPredicate() {
     elements.add(new IdPredicate(elements.remove()));
-  }
-
-  public ASTElement build() {
-    return elements.element();
   }
 
   @Override
@@ -56,35 +53,40 @@ public class ASTBuilder implements EventHandler {
     List<ASTElement> args = dequeue(2);
     elements.add(new AndPredicate(args.get(0), args.get(1)));
   }
-  
+
   @Override
   public void listExpression(int size) {
     // TODO Auto-generated method stub
   }
-  
+
   @Override
   public void numberExpression(Object number) {
-    //cast ensured by ValuesFactoryImpl
+    // cast ensured by ValuesFactoryImpl
     elements.add(new NumberExpression((BigDecimal) number));
   }
-  
+
   @Override
-  public void operatorExpression(String operator) {
-    // TODO Auto-generated method stub
+  public void operatorExpression(ExpressionOperator operator) {
+    List<ASTElement> args = dequeue(2);
+    elements.add(new OperatorExpression(operator, (Expression) args.get(0), (Expression) args.get(1)));
   }
-  
+
   @Override
   public void pathExpression(Object path) {
-    //cast ensured by ValuesFactoryImpl
+    // cast ensured by ValuesFactoryImpl
     elements.add((Path) path);
   }
-  
+
   @Override
   public void stringExpression(Object string) {
-    //cast ensured by ValuesFactoryImpl
+    // cast ensured by ValuesFactoryImpl
     elements.add(new StringExpression((String) string));
   }
-  
+
+  public ASTElement build() {
+    return elements.element();
+  }
+
   protected List<ASTElement> dequeue(int n) {
     LinkedList<ASTElement> list = new LinkedList<ASTElement>();
     Queue<ASTElement> dequeuedElements = Collections.asLifoQueue(list);

@@ -13,7 +13,7 @@ class ASTBuilder extends EventHandler {
     elements.push(Keyword(operation, args.reverse : _*))
   }
 
-  override def operatorPredicate(operation: Operator) =
+  override def operatorPredicate(operation: PredicateOperator) =
     mergeWithBinary(Op(operation, _, _))
 
   override def orPredicate() = mergeWithBinary(Or(_, _))
@@ -22,7 +22,7 @@ class ASTBuilder extends EventHandler {
 
   override def idPredicate() = mergeWithBinary(And(_, _))
 
-  override def operatorExpression(operator: String) = ???
+  override def operatorExpression(operator: ExpressionOperator) = ???
 
   override def stringExpression(string: Any) = string match {
     case s: String => elements.push(s)

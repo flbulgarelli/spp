@@ -1,10 +1,10 @@
 package pparser
 
 import org.scalatest.FunSuite
-import pparser.ast.Keyword
-import ast._
 
-import Operator._
+import pparser.PredicateOperator._
+import pparser._
+import ast._
 class SimpleExpressionParsingSpec extends FunSuite with ParsingAssertions {
 
   test("can parse unary predicates") {

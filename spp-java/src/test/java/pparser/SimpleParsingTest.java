@@ -1,6 +1,6 @@
 package pparser;
 
-import static pparser.Operator.*;
+import static pparser.PredicateOperator.*;
 import static pparser.ast.dsl.DSL.*;
 
 import org.junit.Test;
