@@ -65,7 +65,7 @@ TOKEN : { < CLOSE_BRACKET : "]" > }
 
 TOKEN : { < IDENTIFIER : ["a"-"z","A"-"Z", "_"](["a"-"z","A"-"Z","0"-"9"])* > }
 
-TOKEN : { < NUMBER :  (["0"-"9"])+("."["0"-"9"])? > }
+TOKEN : { < NUMBER :  (["0"-"9"])+("."(["0"-"9"])+)? > }
 TOKEN : { < STRING :  "\"" (~["\""])* "\"" > }
 
 TOKEN : { < EQ : "=" >  }
