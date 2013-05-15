@@ -1,11 +1,14 @@
 package pparser.ast;
 
 import static org.junit.Assert.*;
+import static pparser.ExpressionOperator.*;
 import static pparser.ast.dsl.DSL.*;
 
 import java.math.BigDecimal;
 
 import org.junit.Test;
+
+import pparser.ExpressionOperator;
 
 public class ASTBuilderTest {
 
@@ -27,6 +30,15 @@ public class ASTBuilderTest {
     astBuilder.keywordPredicate("y", 1);
     astBuilder.andPredicate();
     assertEquals(AND(KEYWORD("x", LIT("m")), KEYWORD("y", LIT("n"))), astBuilder.build());
+  }
+
+  @Test
+  public void when_an_operator_is_detected_previous_expressions_are_connected() {
+    ASTBuilder astBuilder = new ASTBuilder();
+    astBuilder.numberExpression(BigDecimal.valueOf(1));
+    astBuilder.numberExpression(BigDecimal.valueOf(2));
+    astBuilder.operatorExpression(PLUS);
+    assertEquals(OP(PLUS, LIT(1), LIT(2)), astBuilder.build());
   }
 
 }

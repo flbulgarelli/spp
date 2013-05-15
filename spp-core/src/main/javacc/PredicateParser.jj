@@ -131,7 +131,7 @@ void predicateLevel3() :
 { 
   LOOKAHEAD(< IDENTIFIER > < OPEN_PAR >)
   keywordPredicate()  |
-  LOOKAHEAD(< IDENTIFIER > ( < DOT > < IDENTIFIER > )* (predicateOperator()) ) 
+  LOOKAHEAD(expressionLevel1() predicateOperator()) 
   operatorPredicate() | 
   idPredicate() |
   < OPEN_PAR > predicateLevel1() < CLOSE_PAR > 

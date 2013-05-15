@@ -23,11 +23,11 @@ import pparser.ast.StringExpression;
  */
 public class DSL {
   
-  public static ASTElement LIT(Number value) {
+  public static Expression LIT(Number value) {
     return new NumberExpression(new BigDecimal(value.toString()));
   }
   
-  public static ASTElement LIT(String value) {
+  public static Expression LIT(String value) {
     return new StringExpression(value);
   }
   

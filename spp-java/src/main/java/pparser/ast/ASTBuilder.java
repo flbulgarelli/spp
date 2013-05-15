@@ -28,30 +28,30 @@ public class ASTBuilder implements EventHandler {
 
   @Override
   public void keywordPredicate(String operation, int arity) {
-    elements.add(new KeywordPredicate(operation, Collections.unmodifiableList(dequeue(arity))));
+    pushElement(new KeywordPredicate(operation, Collections.unmodifiableList(dequeue(arity))));
   }
 
   @Override
   public void operatorPredicate(@NonNull PredicateOperator operation) {
     List<ASTElement> args = dequeue(2);
-    elements.add(new OperatorPredicate(operation, args.get(0), args.get(1)));
+    pushElement(new OperatorPredicate(operation, args.get(0), args.get(1)));
   }
 
   @Override
   public void idPredicate() {
-    elements.add(new IdPredicate(elements.remove()));
+    pushElement(new IdPredicate(elements.remove()));
   }
 
   @Override
   public void orPredicate() {
     List<ASTElement> args = dequeue(2);
-    elements.add(new OrPredicate(args.get(0), args.get(1)));
+    pushElement(new OrPredicate(args.get(0), args.get(1)));
   }
 
   @Override
   public void andPredicate() {
     List<ASTElement> args = dequeue(2);
-    elements.add(new AndPredicate(args.get(0), args.get(1)));
+    pushElement(new AndPredicate(args.get(0), args.get(1)));
   }
 
   @Override
@@ -62,25 +62,29 @@ public class ASTBuilder implements EventHandler {
   @Override
   public void numberExpression(Object number) {
     // cast ensured by ValuesFactoryImpl
-    elements.add(new NumberExpression((BigDecimal) number));
+    pushElement(new NumberExpression((BigDecimal) number));
   }
 
   @Override
   public void operatorExpression(ExpressionOperator operator) {
     List<ASTElement> args = dequeue(2);
-    elements.add(new OperatorExpression(operator, (Expression) args.get(0), (Expression) args.get(1)));
+    pushElement(new OperatorExpression(operator, (Expression) args.get(0), (Expression) args.get(1)));
   }
 
   @Override
   public void pathExpression(Object path) {
     // cast ensured by ValuesFactoryImpl
-    elements.add((Path) path);
+    pushElement((Path) path);
   }
 
   @Override
   public void stringExpression(Object string) {
     // cast ensured by ValuesFactoryImpl
-    elements.add(new StringExpression((String) string));
+    pushElement(new StringExpression((String) string));
+  }
+
+  protected void pushElement(ASTElement expression) {
+    elements.add(expression);
   }
 
   public ASTElement build() {

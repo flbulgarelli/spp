@@ -1,5 +1,6 @@
 package pparser;
 
+import static org.junit.Assert.*;
 import static pparser.PredicateOperator.*;
 import static pparser.ast.dsl.DSL.*;
 
@@ -8,7 +9,7 @@ import org.junit.Test;
 import pparser.ast.ASTElement;
 
 public class SimpleParsingTest extends AbstractParsingTest {
-
+  
   @Test
   public void can_parse_id_predicates()  {
     assertParse("x", ID(VAR("x")));
