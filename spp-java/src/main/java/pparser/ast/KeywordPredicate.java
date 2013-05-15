@@ -20,7 +20,7 @@ import pparser.internal.ValueObject;
  * 
  * @author flbulgarelli
  */
-public class KeywordPredicate extends ValueObject<KeywordPredicate> implements ASTElement {
+public class KeywordPredicate extends ValueObject<KeywordPredicate> implements Predicate {
 
   private static final RelevantState<KeywordPredicate> STATE = new RelevantState<KeywordPredicate>(2) {
     protected void collectState(@NonNull KeywordPredicate object, @NonNull RelevantState.StateCollector s) {
@@ -29,9 +29,9 @@ public class KeywordPredicate extends ValueObject<KeywordPredicate> implements A
   };
 
   private String keyword;
-  private List<ASTElement> args;
+  private List<Expression> args;
 
-  public KeywordPredicate(String keyword, List<ASTElement> args) {
+  public KeywordPredicate(String keyword, List<Expression> args) {
     this.keyword = keyword;
     this.args = args;
   }
@@ -40,19 +40,19 @@ public class KeywordPredicate extends ValueObject<KeywordPredicate> implements A
     return keyword;
   }
   
-  public List<ASTElement> getArgs() {
+  public List<Expression> getArgs() {
     return args;
   }
   
-  public ASTElement getArg0() {
+  public Expression getArg0() {
     return args.get(0);
   }
   
-  public ASTElement getArg1() {
+  public Expression getArg1() {
     return args.get(1);
   }
   
-  public ASTElement getArg2() {
+  public Expression getArg2() {
     return args.get(3);
   }
   
@@ -70,7 +70,7 @@ public class KeywordPredicate extends ValueObject<KeywordPredicate> implements A
     return STATE;
   }
 
-  public static KeywordPredicate from(String operation, ASTElement... args) {
+  public static KeywordPredicate from(String operation, Expression... args) {
     return new KeywordPredicate(operation, Arrays.asList(args));
   }
 }

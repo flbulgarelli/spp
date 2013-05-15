@@ -4,7 +4,7 @@ import net.sf.staccatocommons.lang.value.RelevantState;
 import net.sf.staccatocommons.restrictions.check.NonNull;
 import pparser.internal.ValueObject;
 
-public class IdPredicate extends ValueObject<IdPredicate> implements ASTElement {
+public class IdPredicate extends ValueObject<IdPredicate> implements Predicate {
 
   private static final RelevantState<IdPredicate> STATE = new RelevantState<IdPredicate>(1) {
     @Override

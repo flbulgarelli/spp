@@ -1,10 +1,8 @@
 package pparser.ast;
 
-import java.math.BigDecimal;
+public class StringLiteral extends LiteralExpression<String> {
 
-public class NumberExpression extends LiteralExpression<BigDecimal> {
-
-  public NumberExpression(BigDecimal arg0) {
+  public StringLiteral(String arg0) {
     super(arg0);
   }
 

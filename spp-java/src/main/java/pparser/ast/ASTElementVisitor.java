@@ -25,9 +25,9 @@ public interface ASTElementVisitor<T> {
 
   T visit(Path path);
 
-  T visit(NumberExpression numberExpression);
+  T visit(NumberLiteral numberExpression);
 
-  T visit(StringExpression stringExpression);
+  T visit(StringLiteral stringExpression);
   
   T visit(OperatorExpression operatorExpression);
 }

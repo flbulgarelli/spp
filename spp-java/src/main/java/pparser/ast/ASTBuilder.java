@@ -28,12 +28,13 @@ public class ASTBuilder implements EventHandler {
 
   @Override
   public void keywordPredicate(String operation, int arity) {
-    pushElement(new KeywordPredicate(operation, Collections.unmodifiableList(dequeue(arity))));
+    List<Expression> args = dequeue(arity);
+	pushElement(new KeywordPredicate(operation, Collections.unmodifiableList(args)));
   }
 
   @Override
   public void operatorPredicate(@NonNull PredicateOperator operation) {
-    List<ASTElement> args = dequeue(2);
+    List<Expression> args = dequeue(2);
     pushElement(new OperatorPredicate(operation, args.get(0), args.get(1)));
   }
 
@@ -44,13 +45,13 @@ public class ASTBuilder implements EventHandler {
 
   @Override
   public void orPredicate() {
-    List<ASTElement> args = dequeue(2);
+    List<Predicate> args = dequeue(2);
     pushElement(new OrPredicate(args.get(0), args.get(1)));
   }
 
   @Override
   public void andPredicate() {
-    List<ASTElement> args = dequeue(2);
+    List<Predicate> args = dequeue(2);
     pushElement(new AndPredicate(args.get(0), args.get(1)));
   }
 
@@ -62,13 +63,13 @@ public class ASTBuilder implements EventHandler {
   @Override
   public void numberExpression(Object number) {
     // cast ensured by ValuesFactoryImpl
-    pushElement(new NumberExpression((BigDecimal) number));
+    pushElement(new NumberLiteral((BigDecimal) number));
   }
 
   @Override
   public void operatorExpression(ExpressionOperator operator) {
-    List<ASTElement> args = dequeue(2);
-    pushElement(new OperatorExpression(operator, (Expression) args.get(0), (Expression) args.get(1)));
+    List<Expression> args = dequeue(2);
+    pushElement(new OperatorExpression(operator, args.get(0), args.get(1)));
   }
 
   @Override
@@ -80,7 +81,7 @@ public class ASTBuilder implements EventHandler {
   @Override
   public void stringExpression(Object string) {
     // cast ensured by ValuesFactoryImpl
-    pushElement(new StringExpression((String) string));
+    pushElement(new StringLiteral((String) string));
   }
 
   protected void pushElement(ASTElement expression) {
@@ -91,11 +92,12 @@ public class ASTBuilder implements EventHandler {
     return elements.element();
   }
 
-  protected List<ASTElement> dequeue(int n) {
-    LinkedList<ASTElement> list = new LinkedList<ASTElement>();
-    Queue<ASTElement> dequeuedElements = Collections.asLifoQueue(list);
+  @SuppressWarnings("unchecked")
+  protected  <T extends ASTElement>  List<T> dequeue(int n) {
+    LinkedList<T> list = new LinkedList<T>();
+    Queue<T> dequeuedElements = Collections.asLifoQueue(list);
     for (int i = 0; i < n; i++)
-      dequeuedElements.add(elements.remove());
+      dequeuedElements.add((T) elements.remove());
     return list;
   }
 

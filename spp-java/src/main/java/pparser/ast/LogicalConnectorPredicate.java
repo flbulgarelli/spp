@@ -5,7 +5,7 @@ import net.sf.staccatocommons.restrictions.check.NonNull;
 import pparser.internal.ValueObject;
 
 public abstract class LogicalConnectorPredicate //
-  extends ValueObject<LogicalConnectorPredicate> implements ASTElement {
+  extends ValueObject<LogicalConnectorPredicate> implements Predicate {
 
   private static final RelevantState<LogicalConnectorPredicate> STATE = //
   new RelevantState<LogicalConnectorPredicate>(2) {
@@ -14,19 +14,19 @@ public abstract class LogicalConnectorPredicate //
       s.add(object.arg0).add(object.arg1);
     }
   };
-  private final ASTElement arg0;
-  private final ASTElement arg1;
+  private final Predicate arg0;
+  private final Predicate arg1;
 
-  public LogicalConnectorPredicate(ASTElement arg0, ASTElement arg1) {
+  public LogicalConnectorPredicate(Predicate arg0, Predicate arg1) {
     this.arg0 = arg0;
     this.arg1 = arg1;
   }
   
-  public ASTElement getArg0() {
+  public Predicate getArg0() {
     return arg0;
   }
   
-  public ASTElement getArg1() {
+  public Predicate getArg1() {
     return arg1;
   }
 

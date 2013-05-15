@@ -2,7 +2,7 @@ package pparser.ast;
 
 public class OrPredicate extends LogicalConnectorPredicate {
 
-  public OrPredicate(ASTElement arg0, ASTElement arg1) {
+  public OrPredicate(Predicate arg0, Predicate arg1) {
     super(arg0, arg1);
   }
 

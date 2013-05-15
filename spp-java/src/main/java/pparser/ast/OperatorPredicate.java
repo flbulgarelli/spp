@@ -5,7 +5,7 @@ import net.sf.staccatocommons.restrictions.check.NonNull;
 import pparser.PredicateOperator;
 import pparser.internal.ValueObject;
 
-public class OperatorPredicate extends ValueObject<OperatorPredicate> implements ASTElement {
+public class OperatorPredicate extends ValueObject<OperatorPredicate> implements Predicate {
 
   private static final RelevantState<OperatorPredicate> STATE = new RelevantState<OperatorPredicate>(3) {
     protected void collectState(@NonNull OperatorPredicate object, @NonNull RelevantState.StateCollector s) {
@@ -14,10 +14,10 @@ public class OperatorPredicate extends ValueObject<OperatorPredicate> implements
   };
 
   private PredicateOperator operator;
-  private ASTElement arg0;
-  private ASTElement arg1;
+  private Expression arg0;
+  private Expression arg1;
 
-  public OperatorPredicate(PredicateOperator operator, ASTElement arg0, ASTElement arg1) {
+  public OperatorPredicate(PredicateOperator operator, Expression arg0, Expression arg1) {
     this.operator = operator;
     this.arg0 = arg0;
     this.arg1 = arg1;
@@ -27,11 +27,11 @@ public class OperatorPredicate extends ValueObject<OperatorPredicate> implements
     return operator;
   }
   
-  public ASTElement getArg0() {
+  public Expression getArg0() {
     return arg0;
   }
   
-  public ASTElement getArg1() {
+  public Expression getArg1() {
     return arg1;
   }
   
