@@ -111,7 +111,7 @@ ExpressionOperator expressionOperatorLevel2() :
 void doParse() : 
 { }
 { 
-   predicateLevel1() 
+   predicateLevel1() <EOF>
 }
 
 void predicateLevel1() :

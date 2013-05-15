@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class LogicConnectorParsingTest extends AbstractParsingTest {
 
-  @Test(expected=ParseException.class)
+  @Test(expected=IllegalArgumentException.class)
   public void rejects_illegal_connector() throws Exception {
     PredicateParser.tryParse("f(x) ord g(y)");
   }
