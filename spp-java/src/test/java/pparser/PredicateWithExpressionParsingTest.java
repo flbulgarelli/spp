@@ -9,7 +9,7 @@ import static pparser.ast.dsl.DSL.*;
 
 public class PredicateWithExpressionParsingTest extends AbstractParsingTest {
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = RuntimeParseException.class)
   public void rejects_expresions_as_predicates() {
     PredicateParser.tryParse("x + y");
   }

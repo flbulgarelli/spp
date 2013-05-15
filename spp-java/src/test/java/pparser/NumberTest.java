@@ -21,17 +21,17 @@ public class NumberTest extends AbstractParsingTest {
 		assertParse("f(5.55)", KEYWORD("f", LIT(5.55)));
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=RuntimeParseException.class)
 	public void tryInvalidNumber() {
 		PredicateParser.tryParse("f(5.5.)");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=RuntimeParseException.class)
 	public void tryInvalidNumber2() {
 		PredicateParser.tryParse("f(5.)");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=RuntimeParseException.class)
 	public void tryInvalidNumber3() {
 		PredicateParser.tryParse("f(.0)");
 	}

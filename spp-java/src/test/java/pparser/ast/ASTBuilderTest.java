@@ -8,8 +8,6 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import pparser.ExpressionOperator;
-
 public class ASTBuilderTest {
 
   @Test

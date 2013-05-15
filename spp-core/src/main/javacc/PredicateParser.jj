@@ -32,7 +32,7 @@ public class PredicateParser {
       parser.factory = factory;
       parser.doParse();
     } catch (ParseException e) {
-      throw new IllegalArgumentException("Syntax error in predicate expression " + expression + ". Cause: "
+      throw new RuntimeParseException("Syntax error in predicate expression " + expression + ". Cause: "
         + e.getMessage());
     }
   }
